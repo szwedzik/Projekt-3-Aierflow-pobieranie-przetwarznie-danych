@@ -22,7 +22,7 @@ Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać nast
 2. Dzieli dane na dwa zbiory:
    - **70% danych**: zbiór modelowy.
    - **30% danych**: zbiór do ewentualnego douczenia.
-3. Zapisuje oba zbiory do osobnych arkuszy Google Sheets (np. "Zbiór modelowy" i "Zbiór douczeniowy").
+3. Zapisuje oba zbiory do osobnych arkuszy Google Sheets lub chmury (np. "Zbiór modelowy" i "Zbiór douczeniowy").
 
 #### **Kroki do wykonania**
 1. **Operator do pobrania danych (2 pkt)**  
