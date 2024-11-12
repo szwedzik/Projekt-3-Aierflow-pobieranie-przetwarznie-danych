@@ -20,8 +20,8 @@ Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać nast
 **Cel:** Utwórz DAG, który:
 1. Pobiera plik z danymi (np. z linku lub z lokalnej ścieżki).
 2. Dzieli dane na dwa zbiory:
-   - **70% danych**: zbiór treningowy.
-   - **30% danych**: zbiór testowy.
+   - **70% danych**: zbiór modelowy.
+   - **30% danych**: zbiór do ewentualnego douczenia.
 3. Zapisuje oba zbiory do osobnych arkuszy Google Sheets (np. "Zbiór treningowy" i "Zbiór testowy").
 
 #### **Kroki do wykonania**
