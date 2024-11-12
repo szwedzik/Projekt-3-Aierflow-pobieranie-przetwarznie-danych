@@ -1,0 +1,43 @@
+name: Run Airflow DAG
+
+on:
+  workflow_dispatch: # Pozwala uruchomić workflow ręcznie
+
+jobs:
+  run_airflow_dag:
+    runs-on: ubuntu-latest
+
+    services:
+      # Uruchomienie Airflow za pomocą Docker Compose
+      airflow:
+        image: apache/airflow:2.6.0
+        env:
+          - AIRFLOW__CORE__LOAD_EXAMPLES=False
+        options: --health-cmd="curl -f http://localhost:8080/health || exit 1" --health-interval=10s --health-timeout=5s --health-retries=10
+        ports:
+          - 8080:8080
+        volumes:
+          - ./dags:/opt/airflow/dags
+          - ./logs:/opt/airflow/logs
+          - ./plugins:/opt/airflow/plugins
+        command: bash -c "airflow db init && airflow users create -r Admin -u admin -p admin -e admin@example.com -f admin -l user && airflow webserver & airflow scheduler"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Wait for Airflow to be healthy
+        run: |
+          echo "Waiting for Airflow Webserver to be healthy..."
+          until $(curl --output /dev/null --silent --head --fail http://localhost:8080/health); do
+            printf '.'
+            sleep 5
+          done
+          echo "Airflow Webserver is up and running."
+
+      - name: Trigger Airflow DAG
+        run: |
+          curl -X POST "http://localhost:8080/api/v1/dags/check_duplicates_dag/dagRuns" \
+          -H "Content-Type: application/json" \
+          --user "admin:admin" \
+          -d '{"conf": {}}'
