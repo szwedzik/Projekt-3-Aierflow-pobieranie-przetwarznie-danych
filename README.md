@@ -29,7 +29,7 @@ Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać nast
    - Stwórz task, który pobiera dane z określonego źródła (np. plik `.csv` w lokalnym systemie plików).
 
 2. **Operator do podziału danych (4 pkt)**  
-   - Podziel dane na zbiór treningowy (70%) i testowy (30%) przy użyciu **`train_test_split`** z biblioteki `scikit-learn`.
+   - Podziel dane na zbiór modelowe (70%) i douczeniowe (30%) przy użyciu **`train_test_split`** z biblioteki `scikit-learn`.
    - Upewnij się, że dane są losowo dzielone i że można ustawić losowość podziału za pomocą `random_state`.
 
 3. **Operator do zapisu danych do Google Sheets (4 pkt)**  
