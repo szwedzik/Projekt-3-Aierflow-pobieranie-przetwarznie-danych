@@ -56,8 +56,8 @@ Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać nast
    - Dodatkowo, sprawdź, czy nie ma duplikatów, i w razie potrzeby usuń je.
 
 3. **Operator do standaryzacji i normalizacji (4 pkt)**  
-   - Standaryzacja: skaluj wartości cech, aby miały średnią 0 i odchylenie standardowe 1.
-   - Normalizacja: przeskaluj wartości cech do zakresu [0, 1].
+   - Standaryzacja: skaluj wartości cech.
+   - Normalizacja: przeskaluj wartości cech na numery.
 
 4. **Operator do czyszczenia danych (2 pkt)**  
    - Umieszczenie danych w chmurze lub Google Sheets
