@@ -1,1 +1,86 @@
-# Projekt-3-Aierflow-pobieranie-przetwarznie-danych
+### **Zadanie z Airflow – Łącznie 20 punktów**
+
+#### **Opis projektu**
+
+Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać następujące zadania związane z przetwarzaniem danych. Pierwszy DAG zajmuje się pobraniem i podziałem danych, a drugi przetwarza dane w celu przygotowania ich do dalszej analizy.
+
+#### **Wymagania wstępne**
+
+1. Zainstalowany **Apache Airflow** na lokalnym środowisku.
+2. Zainstalowane biblioteki do obsługi danych w Pythonie, takie jak **pandas**, **scikit-learn**.
+3. Konto w chmurze Google, aby zapisać podzielone zbiory danych w Google Sheets.
+
+---
+
+### **DAG 1: Pobranie i podział danych**
+**(Maksymalnie 10 punktów)**
+
+**Cel:** Utwórz DAG, który:
+1. Pobiera plik z danymi (np. z linku lub z lokalnej ścieżki).
+2. Dzieli dane na dwa zbiory:
+   - **70% danych**: zbiór treningowy.
+   - **30% danych**: zbiór testowy.
+3. Zapisuje oba zbiory do osobnych arkuszy Google Sheets (np. "Zbiór treningowy" i "Zbiór testowy").
+
+#### **Kroki do wykonania**
+1. **Operator do pobrania danych (2 pkt)**  
+   - Stwórz task, który pobiera dane z określonego źródła (np. plik `.csv` w lokalnym systemie plików).
+
+2. **Operator do podziału danych (4 pkt)**  
+   - Podziel dane na zbiór treningowy (70%) i testowy (30%) przy użyciu **`train_test_split`** z biblioteki `scikit-learn`.
+   - Upewnij się, że dane są losowo dzielone i że można ustawić losowość podziału za pomocą `random_state`.
+
+3. **Operator do zapisu danych do Google Sheets (4 pkt)**  
+   - Wgraj dwa zbiory danych (treningowy i testowy) do osobnych arkuszy Google Sheets.
+   - Skonfiguruj autoryzację OAuth 2.0 lub użyj konta usługi (service account), aby móc zapisywać dane w Google Sheets.
+
+> **Wskazówka:** Możesz użyć biblioteki `gspread` do pracy z Google Sheets w Pythonie lub innej, którą uważasz za wygodną.
+
+#### **Punktacja dla DAG 1**
+- Poprawne pobranie danych – **2 pkt**
+- Poprawny podział danych na zbiory 70/30 – **4 pkt**
+- Poprawny zapis do Google Sheets – **4 pkt**
+
+---
+
+### **DAG 2: Przetwarzanie danych**
+**(Maksymalnie 10 punktów)**
+
+**Cel:** Utwórz drugi DAG, który przetwarza dane z Google Sheets. Przetwarzanie obejmuje:
+1. Czyszczenie danych – usunięcie wartości brakujących lub ich odpowiednie przetworzenie.
+2. Standaryzację i normalizację danych.
+
+#### **Kroki do wykonania**
+1. **Operator do pobrania danych z Google Sheets (2 pkt)**  
+   - Stwórz task, który pobiera zbiory treningowy i testowy zapisane w Google Sheets w DAG-u 1.
+
+2. **Operator do czyszczenia danych (4 pkt)**  
+   - Zidentyfikuj i usuń lub przetwórz brakujące wartości.
+   - Dodatkowo, sprawdź, czy nie ma duplikatów, i w razie potrzeby usuń je.
+
+3. **Operator do standaryzacji i normalizacji (4 pkt)**  
+   - Standaryzacja: skaluj wartości cech, aby miały średnią 0 i odchylenie standardowe 1.
+   - Normalizacja: przeskaluj wartości cech do zakresu [0, 1].
+
+> **Wskazówka:** Możesz użyć `StandardScaler` i `MinMaxScaler` z biblioteki **scikit-learn**.
+
+#### **Punktacja dla DAG 2**
+- Poprawne pobranie danych z Google Sheets – **2 pkt**
+- Poprawne czyszczenie danych (braki, duplikaty) – **4 pkt**
+- Poprawna standaryzacja i normalizacja danych – **4 pkt**
+
+---
+
+### **Dodatkowe informacje**
+
+- **Dokumentacja:** Każdy DAG powinien być opisany w komentarzach, a kroki pracy udokumentowane, aby osoba sprawdzająca mogła zrozumieć podejście.
+- **Testowanie:** Upewnij się, że oba DAG-i są poprawnie skonfigurowane i uruchamiają się w Airflow bez błędów.
+- **Ocena końcowa** oparta będzie na działaniu i poprawności każdego etapu.
+
+#### **Wynik zadania**
+
+Wynikiem zadania ma być link do waszych dagów oraz screeny, że działją
+
+---
+
+Powodzenia!
