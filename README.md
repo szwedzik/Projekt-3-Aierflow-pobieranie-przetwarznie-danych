@@ -10,7 +10,7 @@ Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać nast
 
 1. Zainstalowany **Apache Airflow** na lokalnym środowisku.
 2. Zainstalowane biblioteki do obsługi danych w Pythonie, takie jak **pandas**, **scikit-learn**.
-3. Konto w chmurze Google, aby zapisać podzielone zbiory danych w Google Sheets.
+3. Konto w chmurze Google, aby zapisać podzielone zbiory danych w Google Sheets lub w inne miejsce na chmurze.
 
 ---
 
@@ -38,11 +38,6 @@ Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać nast
 
 > **Wskazówka:** Możesz użyć biblioteki `gspread` do pracy z Google Sheets w Pythonie lub innej, którą uważasz za wygodną.
 
-#### **Punktacja dla DAG 1**
-- Poprawne pobranie danych – **2 pkt**
-- Poprawny podział danych na zbiory 70/30 – **4 pkt**
-- Poprawny zapis do Google Sheets – **4 pkt**
-
 ---
 
 ### **DAG 2: Przetwarzanie danych**
@@ -53,10 +48,10 @@ Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać nast
 2. Standaryzację i normalizację danych.
 
 #### **Kroki do wykonania**
-1. **Operator do pobrania danych z Google Sheets (2 pkt)**  
+1. **Operator do pobrania danych z Google Sheets lub innego źródła (2 pkt)**  
    - Stwórz task, który pobiera zbiory treningowy i testowy zapisane w Google Sheets w DAG-u 1.
 
-2. **Operator do czyszczenia danych (4 pkt)**  
+2. **Operator do czyszczenia danych (2 pkt)**  
    - Zidentyfikuj i usuń lub przetwórz brakujące wartości.
    - Dodatkowo, sprawdź, czy nie ma duplikatów, i w razie potrzeby usuń je.
 
@@ -64,12 +59,10 @@ Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać nast
    - Standaryzacja: skaluj wartości cech, aby miały średnią 0 i odchylenie standardowe 1.
    - Normalizacja: przeskaluj wartości cech do zakresu [0, 1].
 
-> **Wskazówka:** Możesz użyć `StandardScaler` i `MinMaxScaler` z biblioteki **scikit-learn**.
+4. **Operator do czyszczenia danych (2 pkt)**  
+   - Umieszczenie danych w chmurze lub Google Sheets
 
-#### **Punktacja dla DAG 2**
-- Poprawne pobranie danych z Google Sheets – **2 pkt**
-- Poprawne czyszczenie danych (braki, duplikaty) – **4 pkt**
-- Poprawna standaryzacja i normalizacja danych – **4 pkt**
+> **Wskazówka:** Możesz użyć `StandardScaler` i `MinMaxScaler` z biblioteki **scikit-learn**.
 
 ---
 
