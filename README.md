@@ -49,7 +49,7 @@ Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać nast
 
 #### **Kroki do wykonania**
 1. **Operator do pobrania danych z Google Sheets lub innego źródła (2 pkt)**  
-   - Stwórz task, który pobiera zbiory treningowy i testowy zapisane w Google Sheets w DAG-u 1.
+   - Stwórz task, który pobiera zbior modelowy zapisane w Google Sheets w DAG-u 1.
 
 2. **Operator do czyszczenia danych (2 pkt)**  
    - Zidentyfikuj i usuń lub przetwórz brakujące wartości.
