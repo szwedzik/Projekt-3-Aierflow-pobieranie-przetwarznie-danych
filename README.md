@@ -74,7 +74,7 @@ Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać nast
 
 #### **Wynik zadania**
 
-Wynikiem zadania ma być link do waszych dagów oraz screeny, że działją
+Wynikiem zadania ma być link do waszych dagów oraz screeny, że działają
 
 ---
 
