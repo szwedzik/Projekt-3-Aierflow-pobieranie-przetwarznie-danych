@@ -1,10 +1,10 @@
-name: Run Airflow DAG
+name: Run Airflow DAGs
 
 on:
-  workflow_dispatch: # Pozwala na ręczne uruchomienie workflow
+  workflow_dispatch:
 
 jobs:
-  run_airflow_dag:
+  run_airflow_dags:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,28 +13,34 @@ jobs:
 
       - name: Install Docker Compose
         run: |
-          curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          chmod +x /usr/local/bin/docker-compose
+          sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r .tag_name)/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
 
       - name: Set up Docker Compose
         run: |
           docker-compose up -d
           echo "Waiting for Airflow Webserver to start..."
-          timeout=60 # Czas oczekiwania na uruchomienie Airflow w sekundach (5 minut)
+          timeout=120
           while ! curl -s http://localhost:8080 | grep -q "Log In"; do
             if [ $timeout -le 0 ]; then
               echo "Timeout waiting for Airflow to start"
-              exit 0
+              exit 1
             fi
             echo "Still waiting for Airflow..."
             sleep 10
-            timeout=$((timeout - 5))
+            timeout=$((timeout - 10))
           done
-          echo "Airflow Webserver is up and running."
 
-      - name: Trigger Airflow DAG
+      - name: Trigger DAG 1
         run: |
-          curl -X POST "http://localhost:8080/api/v1/dags/check_duplicates_dag/dagRuns" \
+          curl -X POST "http://localhost:8080/api/v1/dags/dag1_download_and_split/dagRuns" \
+          -H "Content-Type: application/json" \
+          --user "admin:admin" \
+          -d '{"conf": {}}'
+
+      - name: Trigger DAG 2
+        run: |
+          curl -X POST "http://localhost:8080/api/v1/dags/dag2_process_data/dagRuns" \
           -H "Content-Type: application/json" \
           --user "admin:admin" \
           -d '{"conf": {}}'
