@@ -23,7 +23,7 @@ jobs:
         run: |
           docker-compose up -d
           echo "Waiting for Airflow Webserver to start..."
-          timeout=120
+          timeout=300
           while ! curl -s http://localhost:8080 | grep -q "Log In"; do
             if [ $timeout -le 0 ]; then
               echo "Timeout waiting for Airflow to start"
