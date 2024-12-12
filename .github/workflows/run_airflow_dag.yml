@@ -1,6 +1,9 @@
 name: Run Airflow DAGs
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
