@@ -1,81 +1,95 @@
-https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html
+# Airflow Pobieranie i Przetwarzanie Danych
 
-### **Zadanie z Airflow – Łącznie 20 punktów**
+## Opis projektu
 
-#### **Opis projektu**
+Ten projekt zawiera dwa DAG-i stworzone w Apache Airflow do przetwarzania danych. Workflow zostały przygotowane, aby pobierać dane, dzielić je, przetwarzać, a następnie zapisywać w arkuszach Google Sheets.
 
-Stwórz dwa przepływy zadań (**DAG**) w Airflow, które będą wykonywać następujące zadania związane z przetwarzaniem danych. Pierwszy DAG zajmuje się pobraniem i podziałem danych, a drugi przetwarza dane w celu przygotowania ich do dalszej analizy.
+### **DAG 1: Download and Split Data**
 
-#### **Wymagania wstępne**
+**Opis:**
+- Pobiera dane z zewnętrznego źródła (plik CSV).
+- Dzieli dane na dwie części:
+  - **Model Dataset** (70%)
+  - **Retrain Dataset** (30%).
+- Zapisuje te dane w osobnych arkuszach Google Sheets.
 
-1. Zainstalowany **Apache Airflow** na lokalnym środowisku.
-2. Zainstalowane biblioteki do obsługi danych w Pythonie, takie jak **pandas**, **scikit-learn**.
-3. Konto w chmurze Google, aby zapisać podzielone zbiory danych w Google Sheets lub w inne miejsce na chmurze.
+**Kroki:**
+1. Pobranie danych z podanego URL.
+2. Podział danych przy użyciu `train_test_split`.
+3. Zapis danych do arkuszy Google Sheets.
 
----
-
-### **DAG 1: Pobranie i podział danych**
-**(Maksymalnie 10 punktów)**
-
-**Cel:** Utwórz DAG, który:
-1. Pobiera plik z danymi (np. z linku lub z lokalnej ścieżki).
-2. Dzieli dane na dwa zbiory:
-   - **70% danych**: zbiór modelowy.
-   - **30% danych**: zbiór do ewentualnego douczenia.
-3. Zapisuje oba zbiory do osobnych arkuszy Google Sheets lub chmury (np. "Zbiór modelowy" i "Zbiór douczeniowy").
-
-#### **Kroki do wykonania**
-1. **Operator do pobrania danych (2 pkt)**  
-   - Stwórz task, który pobiera dane z określonego źródła (np. plik `.csv` w lokalnym systemie plików).
-
-2. **Operator do podziału danych (4 pkt)**  
-   - Podziel dane na zbiór modelowe (70%) i douczeniowe (30%) przy użyciu **`train_test_split`** z biblioteki `scikit-learn`.
-   - Upewnij się, że dane są losowo dzielone i że można ustawić losowość podziału za pomocą `random_state`.
-
-3. **Operator do zapisu danych do Google Sheets (4 pkt)**  
-   - Wgraj dwa zbiory danych (treningowy i testowy) do osobnych arkuszy Google Sheets.
-   - Skonfiguruj autoryzację OAuth 2.0 lub użyj konta usługi (service account), aby móc zapisywać dane w Google Sheets.
-
-> **Wskazówka:** Możesz użyć biblioteki `gspread` do pracy z Google Sheets w Pythonie lub innej, którą uważasz za wygodną.
+**Kod DAG-a:**
+[Link do kodu DAG 1](https://github.com/<username>/<repo-name>/blob/main/dags/dag1_download_and_split.py)
 
 ---
 
-### **DAG 2: Przetwarzanie danych**
-**(Maksymalnie 10 punktów)**
+### **DAG 2: Process Data**
 
-**Cel:** Utwórz drugi DAG, który przetwarza dane z Google Sheets. Przetwarzanie obejmuje:
-1. Czyszczenie danych – usunięcie wartości brakujących lub ich odpowiednie przetworzenie.
-2. Standaryzację i normalizację danych.
+**Opis:**
+- Pobiera dane z arkusza Google Sheets (**Model Dataset**).
+- Czyści dane (usunięcie braków i duplikatów).
+- Skalowanie i normalizacja danych.
+- Zapisuje przetworzone dane w nowym arkuszu Google Sheets (**Processed Dataset**).
 
-#### **Kroki do wykonania**
-1. **Operator do pobrania danych z Google Sheets lub innego źródła (2 pkt)**  
-   - Stwórz task, który pobiera zbior modelowy zapisane w Google Sheets w DAG-u 1.
+**Kroki:**
+1. Pobranie danych z Google Sheets.
+2. Czyszczenie danych (usuwanie braków i duplikatów).
+3. Skalowanie i normalizacja danych przy użyciu `StandardScaler` i `MinMaxScaler`.
+4. Zapis danych do nowego arkusza Google Sheets.
 
-2. **Operator do czyszczenia danych (2 pkt)**  
-   - Zidentyfikuj i usuń lub przetwórz brakujące wartości.
-   - Dodatkowo, sprawdź, czy nie ma duplikatów, i w razie potrzeby usuń je.
-
-3. **Operator do standaryzacji i normalizacji (4 pkt)**  
-   - Standaryzacja: skaluj wartości cech.
-   - Normalizacja: przeskaluj wartości cech na numery.
-
-4. **Operator do czyszczenia danych (2 pkt)**  
-   - Umieszczenie danych w chmurze lub Google Sheets
-
-> **Wskazówka:** Możesz użyć `StandardScaler` i `MinMaxScaler` z biblioteki **scikit-learn**.
+**Kod DAG-a:**
+[Link do kodu DAG 2](https://github.com/<username>/<repo-name>/blob/main/dags/dag2_process_data.py)
 
 ---
 
-### **Dodatkowe informacje**
+## Wyniki działania
 
-- **Dokumentacja:** Każdy DAG powinien być opisany w komentarzach, a kroki pracy udokumentowane, aby osoba sprawdzająca mogła zrozumieć podejście.
-- **Testowanie:** Upewnij się, że oba DAG-i są poprawnie skonfigurowane i uruchamiają się w Airflow bez błędów.
-- **Ocena końcowa** oparta będzie na działaniu i poprawności każdego etapu.
+### Linki do DAG-ów
+- [DAG 1: Download and Split Data](https://github.com/<username>/<repo-name>/blob/main/dags/dag1_download_and_split.py)
+- [DAG 2: Process Data](https://github.com/<username>/<repo-name>/blob/main/dags/dag2_process_data.py)
 
-#### **Wynik zadania**
+### Zrzuty ekranu
 
-Wynikiem zadania ma być link do waszych dagów oraz screeny, że działają
+#### 1. Widok działania workflow w GitHub Actions
+![dag](screenshots/dags.png)
+
 
 ---
 
-Powodzenia!
+## Jak uruchomić projekt
+
+### Przy użyciu GitHub Actions
+
+1. Przejdź do zakładki **Actions** w repozytorium.
+2. Wybierz workflow **Run Airflow DAGs**.
+3. Kliknij przycisk **Run workflow** i poczekaj na zakończenie wszystkich kroków.
+
+Workflow automatycznie:
+- Uruchomi kontener z Apache Airflow.
+- Wywoła oba DAG-i.
+- Przetworzy dane i zapisze je w Google Sheets.
+
+### Ręczne uruchomienie lokalne
+
+1. Uruchom środowisko Docker przy użyciu `docker-compose.yml`:
+   ```bash
+   docker-compose up
+   ```
+2. Wejdź na [http://localhost:8080](http://localhost:8080).
+3. Zaloguj się do Apache Airflow (domyślnie: **admin/admin**).
+4. Uruchom DAG-i ręcznie z poziomu interfejsu użytkownika.
+
+---
+
+## Testowanie
+
+- Oba DAG-i zostały przetestowane w środowisku GitHub Actions oraz lokalnie.
+- Logi z działania są dostępne w zakładce **Actions** w repozytorium.
+
+---
+
+## Uwagi dodatkowe
+
+- Wszystkie operacje na arkuszach Google Sheets wymagają poprawnej konfiguracji klucza JSON do autoryzacji konta usługi.
+- Linki do wygenerowanych arkuszy Google Sheets powinny być załączone jako dowód działania.
+
